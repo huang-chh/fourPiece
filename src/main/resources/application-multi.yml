@@ -1,0 +1,53 @@
+server:
+  port: 8180
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    #主库
+    master:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/abc?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&allowMultiQueries=true
+      username: root
+      password: root
+      type: com.alibaba.druid.pool.DruidDataSource
+      druid:
+        max-active: 20
+        min-idle: 5
+        initial-size: 2
+        max-wait: 10000
+        keep-alive: true
+        validation-query: select 1 from dual
+    #从库
+    slave:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/def?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&allowMultiQueries=true
+      username: root
+      password: root
+      type: com.alibaba.druid.pool.DruidDataSource
+      druid:
+        max-active: 20
+        min-idle: 5
+        initial-size: 2
+        max-wait: 10000
+        keep-alive: true
+        validation-query: select 1 from dual
+    #从库
+    impala:
+      driver-class-name: com.cloudera.impala.jdbc41.Driver
+      url: jdbc:impala://localhost/default
+      username: root
+      password: root
+      type: com.alibaba.druid.pool.DruidDataSource
+      druid:
+        max-active: 20
+        min-idle: 5
+        initial-size: 2
+        max-wait: 10000
+        keep-alive: true
+        validation-query: select 1 from dual
+
+mybatis:
+  type-aliases-package: com.tiger.demo.entity # 别名扫描宝
+  mapper-locations: classpath:mapping/*.xml # 映射文件的路径扫描
+  #config-location: classpath:mybatis-spring.xml
