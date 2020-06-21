@@ -10,5 +10,9 @@ import java.util.List;
  */
 
 public interface MyOrderService {
-    List<MyOrder> getOrderList(String id);
+    List<MyOrder> getOrderList();
+
+    Object getInfo(String id);
+
+    int insert(MyOrder myOrder);
 }

@@ -14,4 +14,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ZhuaMapper {
     @DataSourceType(DataSourceEnum.SLAVE_DB)
     Zhua getZhuaById(@Param("id") int id);
+    @DataSourceType(DataSourceEnum.SLAVE_DB)
+    int insert(Zhua zhua);
 }

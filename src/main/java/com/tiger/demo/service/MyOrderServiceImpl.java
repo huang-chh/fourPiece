@@ -9,6 +9,7 @@ import com.tiger.demo.mapper.MyOrderMapper;
 import com.tiger.demo.mapper.ZhuaMapper;
 import com.tiger.demo.service.impl.MyOrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * @Author tiger
  */
 
+@Transactional
 @Service
 public class MyOrderServiceImpl implements MyOrderService {
 
@@ -28,19 +30,23 @@ public class MyOrderServiceImpl implements MyOrderService {
     @Resource
     private MyFirstTableMapper myFirstTableMapper;
 
-    @Override
-    public List<MyOrder> getOrderList(String id) {
-        if("666".equals(id)){
-//            DataSourceHolder.setDataSource("slave");
-            System.out.println(zhuaMapper.getZhuaById(1).toString());
-            return null;
-        }else if("777".equals(id)){
-            System.out.println(myFirstTableMapper.getInfoById(1).toString());
-            return null;
-        }else {
-            return myOrderMapper.getOrderList();
-        }
 
+    @Override
+    public List<MyOrder> getOrderList() {
+        return myOrderMapper.getOrderList();
     }
+
+    @Override
+    public Object getInfo(String id) {
+        return zhuaMapper.getZhuaById(new Integer(id));
+    }
+
+    @Override
+    public int insert(MyOrder myOrder) {
+        int a = myOrderMapper.insert(myOrder);
+//        double b = 1/0;
+        return a;
+    }
+
 
 }

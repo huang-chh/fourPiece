@@ -13,4 +13,6 @@ import java.util.List;
 public interface MyOrderMapper {
     @DataSourceType
     List<MyOrder> getOrderList();
+    @DataSourceType
+    int insert(MyOrder myOrder);
 }

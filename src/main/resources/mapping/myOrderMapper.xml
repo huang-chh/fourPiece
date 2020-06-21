@@ -6,4 +6,11 @@
   <select id="getOrderList" resultType="myOrder">
     select  * from  myOrder
     </select>
+  <insert id="insert" parameterType="myOrder">
+    insert into myOrder(id,name)
+    values (
+    #{id},
+    #{name}
+    )
+  </insert>
 </mapper>
