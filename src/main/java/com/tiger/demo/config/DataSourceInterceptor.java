@@ -2,6 +2,7 @@ package com.tiger.demo.config;
 
 import com.tiger.demo.core.DataSourceType;
 import com.tiger.demo.enums.DataSourceEnum;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -36,15 +37,17 @@ public class DataSourceInterceptor {
     public void beforeMethod(JoinPoint joinpoint){
         Method method = ((MethodSignature) joinpoint.getSignature()).getMethod();
         DataSourceType annotation = method.getAnnotation(DataSourceType.class);
-        DataSourceEnum value = annotation.value();
-        DataSourceHolder.setDataSource(value.getValue());
+        //不使用注解的使用，默认走master数据源,否则使用注解中的数据源
+        if (annotation==null){
+            DataSourceHolder.setDataSource(DataSourceEnum.MASTE_DB.getValue());
+        }else{
+            DataSourceEnum value = annotation.value();
+            DataSourceHolder.setDataSource(value.getValue());
+        }
     }
 
     @After("execution(* com.tiger.demo.mapper.*.*(..))")
     public void afterMethod(JoinPoint joinpoint){
-//        Method method = ((MethodSignature) joinpoint.getSignature()).getMethod();
-//        DataSourceType annotation = method.getAnnotation(DataSourceType.class);
-//        DataSourceEnum value = annotation.value();
         DataSourceHolder.clear();
     }
 
